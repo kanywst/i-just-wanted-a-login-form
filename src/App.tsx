@@ -68,10 +68,10 @@ function App() {
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 max-w-4xl mx-auto">
-            <LogoPair src="/logos/auth0.png" alt="Auth0" text="Auth0" />
-            <LogoPair src="/logos/cognito.png" alt="Cognito" text="Cognito" />
-            <LogoPair src="/logos/supabase.png" alt="Supabase" text="Supabase" />
-            <LogoPair src="/logos/firebase.png" alt="Firebase" text="Firebase" />
+            <LogoPair src="logos/auth0.png" alt="Auth0" text="Auth0" />
+            <LogoPair src="logos/cognito.png" alt="Cognito" text="Cognito" />
+            <LogoPair src="logos/supabase.png" alt="Supabase" text="Supabase" />
+            <LogoPair src="logos/firebase.png" alt="Firebase" text="Firebase" />
           </div>
           <p className="text-xl text-gray-500 font-bold tracking-widest uppercase">Okay, social logins handled. Cool.</p>
         </div>
@@ -94,10 +94,10 @@ function App() {
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 max-w-4xl mx-auto">
-            <LogoPair src="/logos/ldap.png" alt="OpenLDAP" text="LDAP" />
-            <LogoPair src="/logos/okta.png" alt="Okta" text="Okta" />
-            <LogoPair src="/logos/pingidentity.png" alt="PingIdentity" text="PingIdentity" />
-            <LogoPair src="/logos/zitadel.png" alt="Zitadel" text="Zitadel" />
+            <LogoPair src="logos/ldap.png" alt="OpenLDAP" text="LDAP" />
+            <LogoPair src="logos/okta.png" alt="Okta" text="Okta" />
+            <LogoPair src="logos/pingidentity.png" alt="PingIdentity" text="PingIdentity" />
+            <LogoPair src="logos/zitadel.png" alt="Zitadel" text="Zitadel" />
           </div>
           <p className="text-xl text-gray-500 font-bold uppercase">Identity Providers orchestration begins. You survive.</p>
         </div>
@@ -114,8 +114,8 @@ function App() {
           </p>
           
           <div className="grid grid-cols-2 gap-6 pt-12 max-w-2xl mx-auto">
-            <LogoPair src="/logos/keycloak.png" alt="Keycloak" text="Keycloak" />
-            <LogoPair src="/logos/clerk.png" alt="Clerk" text="Clerk" />
+            <LogoPair src="logos/keycloak.png" alt="Keycloak" text="Keycloak" />
+            <LogoPair src="logos/clerk.png" alt="Clerk" text="Clerk" />
           </div>
           <p className="text-xl text-gray-500 font-bold uppercase">Admin, Editor, Viewer. Simple.</p>
         </div>
@@ -136,10 +136,10 @@ function App() {
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 max-w-4xl mx-auto">
-            <LogoPair src="/logos/open-policy-agent.png" alt="OPA" text="Open Policy Agent" />
-            <LogoPair src="/logos/cedar.png" alt="Cedar" text="Cedar" />
-            <LogoPair src="/logos/casbin.png" alt="Casbin" text="Casbin" />
-            <LogoPair src="/logos/oso.png" alt="Oso" text="Oso" />
+            <LogoPair src="logos/open-policy-agent.png" alt="OPA" text="Open Policy Agent" />
+            <LogoPair src="logos/cedar.png" alt="Cedar" text="Cedar" />
+            <LogoPair src="logos/casbin.png" alt="Casbin" text="Casbin" />
+            <LogoPair src="logos/oso.png" alt="Oso" text="Oso" />
           </div>
           <p className="text-xl text-gray-500 font-bold uppercase">You write Rego. You write Cedar. You write Polar.</p>
         </div>
@@ -161,10 +161,10 @@ function App() {
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 max-w-4xl mx-auto">
-            <LogoPair src="/logos/google-zanzibar.png" alt="Zanzibar" text="Google Zanzibar" />
-            <LogoPair src="/logos/spicedb.png" alt="SpiceDB" text="SpiceDB" />
-            <LogoPair src="/logos/openfga.png" alt="OpenFGA" text="OpenFGA" />
-            <LogoPair src="/logos/permify.png" alt="Permify" text="Permify" />
+            <LogoPair src="logos/google-zanzibar.png" alt="Zanzibar" text="Google Zanzibar" />
+            <LogoPair src="logos/spicedb.png" alt="SpiceDB" text="SpiceDB" />
+            <LogoPair src="logos/openfga.png" alt="OpenFGA" text="OpenFGA" />
+            <LogoPair src="logos/permify.png" alt="Permify" text="Permify" />
           </div>
         </div>
       </Section>

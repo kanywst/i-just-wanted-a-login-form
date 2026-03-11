@@ -22,7 +22,12 @@ export function ChaosWall() {
             transition={{ delay: (index % 10) * 0.1, duration: 0.5 }}
             className="border border-neutral-800 p-4 flex items-center justify-center aspect-square"
           >
-            <img src={`/logos/${logo}.png`} alt={logo} className="w-10 h-10 object-contain filter grayscale" />
+            <img 
+              src={`logos/${logo}.png`} 
+              alt={logo} 
+              className="w-10 h-10 object-contain filter grayscale" 
+              onError={(e) => { (e.target as HTMLImageElement).src = `https://via.placeholder.com/40/111111/666666?text=${logo[0]}` }}
+            />
           </motion.div>
         ))}
       </div>

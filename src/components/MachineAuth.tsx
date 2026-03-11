@@ -21,7 +21,7 @@ const layer1: Node[] = [
     id: "istiod",
     name: "Istiod",
     sub: "Control Plane / Root CA",
-    src: "/logos/istio.png",
+    src: "logos/istio.png",
     color: "#466BB0",
     snark:
       "Manages your entire mesh config via xDS. One misconfiguration and every deployment silently fails.",
@@ -30,7 +30,7 @@ const layer1: Node[] = [
     id: "spire",
     name: "SPIRE Server",
     sub: "Workload Identity (SVID)",
-    src: "/logos/spire.svg",
+    src: "logos/spire.svg",
     color: "#2E8B57",
     snark: "Issues X.509 SVIDs to every pod. Because trusting the IP address was so 2010.",
   },
@@ -38,7 +38,7 @@ const layer1: Node[] = [
     id: "gatekeeper",
     name: "OPA Gatekeeper",
     sub: "Admission Controller",
-    src: "/logos/open-policy-agent.png",
+    src: "logos/open-policy-agent.png",
     color: "#2D8A81",
     snark:
       "Validates every pod before it starts. Written in Rego, a language nobody asked for.",
@@ -50,7 +50,7 @@ const layer2: Node[] = [
     id: "agent",
     name: "SPIRE Agent",
     sub: "DaemonSet — every node",
-    src: "/logos/spire.svg",
+    src: "logos/spire.svg",
     color: "#2E8B57",
     snark:
       "Runs on every single node. Talks to SPIRE Server to attest workload identity via node attestation.",
@@ -59,7 +59,7 @@ const layer2: Node[] = [
     id: "cilium",
     name: "Cilium CNI",
     sub: "eBPF network layer",
-    src: "/logos/cilium.png",
+    src: "logos/cilium.png",
     color: "#F0DF65",
     snark:
       "Handles L3/L4 NetworkPolicy via eBPF. Doesn't replace the mesh, just adds another layer of config.",
