@@ -1,20 +1,7 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
 import type { ReactNode } from 'react';
 
-// Common staggered animation configuration
-export const defaultTransitions = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.8, 
-      ease: [0.16, 1, 0.3, 1] 
-    } 
-  }
-};
-
-export const defaultContainer = {
+const defaultContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
