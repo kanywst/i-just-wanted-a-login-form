@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { NodeCard } from './MachineAuth'
@@ -14,102 +14,79 @@ const node = {
 
 describe('NodeCard', () => {
   it('renders the node name and subtitle', () => {
-    render(
-      <NodeCard
-        node={node}
-        isHovered={false}
-        onEnter={() => {}}
-        onLeave={() => {}}
-      />,
-    )
+    render(<NodeCard node={node} />)
 
     expect(screen.getByText('Test Node')).toBeInTheDocument()
     expect(screen.getByText('subtitle line')).toBeInTheDocument()
   })
 
   it('hides the decorative logo from assistive tech', () => {
-    const { container } = render(
-      <NodeCard
-        node={node}
-        isHovered={false}
-        onEnter={() => {}}
-        onLeave={() => {}}
-      />,
-    )
+    const { container } = render(<NodeCard node={node} />)
 
     const img = container.querySelector('img')
     expect(img).toHaveAttribute('aria-hidden', 'true')
     expect(img).toHaveAttribute('alt', '')
   })
 
-  it('shows the snark tooltip when isHovered is true', () => {
-    render(
-      <NodeCard
-        node={node}
-        isHovered={true}
-        onEnter={() => {}}
-        onLeave={() => {}}
-      />,
-    )
-
-    expect(screen.getByRole('tooltip')).toHaveTextContent('snarky tooltip text')
+  it('renders without role=button to avoid implying activatability', () => {
+    render(<NodeCard node={node} />)
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
-  it('hides the tooltip when isHovered is false', () => {
-    render(
-      <NodeCard
-        node={node}
-        isHovered={false}
-        onEnter={() => {}}
-        onLeave={() => {}}
-      />,
-    )
-
+  it('hides the tooltip by default', () => {
+    render(<NodeCard node={node} />)
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
   })
 
-  it('fires onEnter when focused via keyboard for a11y parity with hover', async () => {
-    const onEnter = vi.fn()
-    render(
-      <NodeCard
-        node={node}
-        isHovered={false}
-        onEnter={onEnter}
-        onLeave={() => {}}
-      />,
-    )
+  it('shows the snark tooltip on hover and detaches it on mouse leave', async () => {
+    const user = userEvent.setup()
+    render(<NodeCard node={node} />)
+    const trigger = screen.getByLabelText(/Test Node/)
 
-    await userEvent.tab()
-    expect(onEnter).toHaveBeenCalled()
+    await user.hover(trigger)
+    expect(screen.getByRole('tooltip')).toHaveTextContent('snarky tooltip text')
+    expect(trigger).toHaveAttribute('aria-describedby')
+
+    await user.unhover(trigger)
+    // The tooltip node lingers briefly during framer-motion's exit animation,
+    // so assert via the user-facing signal: aria-describedby is unlinked.
+    expect(trigger).not.toHaveAttribute('aria-describedby')
   })
 
-  it('fires onLeave on blur', async () => {
-    const onLeave = vi.fn()
-    render(
-      <NodeCard
-        node={node}
-        isHovered={false}
-        onEnter={() => {}}
-        onLeave={onLeave}
-      />,
-    )
+  it('shows the tooltip on keyboard focus and detaches it on blur', async () => {
+    const user = userEvent.setup()
+    render(<NodeCard node={node} />)
+    const trigger = screen.getByLabelText(/Test Node/)
 
-    await userEvent.tab()
-    await userEvent.tab()
-    expect(onLeave).toHaveBeenCalled()
+    await user.tab()
+    expect(trigger).toHaveFocus()
+    expect(screen.getByRole('tooltip')).toBeInTheDocument()
+    expect(trigger).toHaveAttribute('aria-describedby')
+
+    await user.tab()
+    expect(trigger).not.toHaveAttribute('aria-describedby')
   })
 
-  it('exposes the tooltip via aria-describedby when active', () => {
-    render(
-      <NodeCard
-        node={node}
-        isHovered={true}
-        onEnter={() => {}}
-        onLeave={() => {}}
-      />,
-    )
+  it('keeps the tooltip visible while focused even after a mouse leave', async () => {
+    const user = userEvent.setup()
+    render(<NodeCard node={node} />)
+    const trigger = screen.getByLabelText(/Test Node/)
 
-    const trigger = screen.getByRole('button', { name: /Test Node/ })
+    await user.hover(trigger)
+    trigger.focus()
+    expect(screen.getByRole('tooltip')).toBeInTheDocument()
+
+    await user.unhover(trigger)
+    // Mouse left, but focus is still on the trigger — tooltip must remain.
+    expect(screen.getByRole('tooltip')).toBeInTheDocument()
+  })
+
+  it('exposes the tooltip via aria-describedby when active', async () => {
+    const user = userEvent.setup()
+    render(<NodeCard node={node} />)
+    const trigger = screen.getByLabelText(/Test Node/)
+
+    await user.hover(trigger)
     const tooltip = screen.getByRole('tooltip')
     expect(trigger).toHaveAttribute('aria-describedby', tooltip.id)
   })
