@@ -7,7 +7,6 @@ export function useCountUp(
   prefix: string = "",
   suffix: string = ""
 ) {
-  const [value, setValue] = useState(0);
   const [display, setDisplay] = useState(`${prefix}0${suffix}`);
   const frameRef = useRef<number>(undefined);
 
@@ -15,7 +14,6 @@ export function useCountUp(
     if (!shouldStart) return;
 
     const startTime = performance.now();
-    const startValue = 0;
 
     function animate(currentTime: number) {
       const elapsed = currentTime - startTime;
@@ -23,9 +21,8 @@ export function useCountUp(
 
       // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(startValue + (target - startValue) * eased);
+      const current = Math.round(target * eased);
 
-      setValue(current);
       setDisplay(`${prefix}${current.toLocaleString()}${suffix}`);
 
       if (progress < 1) {
@@ -40,5 +37,5 @@ export function useCountUp(
     };
   }, [shouldStart, target, duration, prefix, suffix]);
 
-  return { value, display };
+  return { display };
 }
