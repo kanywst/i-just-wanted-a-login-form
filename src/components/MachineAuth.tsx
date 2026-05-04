@@ -68,17 +68,14 @@ const layer2: Node[] = [
 
 export const NodeCard = ({
   node,
-  isHovered,
-  onEnter,
-  onLeave,
   compact = false,
 }: {
   node: Node;
-  isHovered: boolean;
-  onEnter: () => void;
-  onLeave: () => void;
   compact?: boolean;
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const visible = isHovered || isFocused;
   const tooltipId = `node-tooltip-${node.id}`;
   return (
     <motion.div
@@ -86,21 +83,20 @@ export const NodeCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35 }}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-      onFocus={onEnter}
-      onBlur={onLeave}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       tabIndex={0}
-      role="button"
-      aria-describedby={isHovered ? tooltipId : undefined}
+      aria-describedby={visible ? tooltipId : undefined}
       aria-label={`${node.name} — ${node.sub}`}
       className="relative cursor-help flex-1 outline-none focus-visible:ring-2 focus-visible:ring-white/60"
     >
       <div
         className={`border bg-black flex ${compact ? "flex-row gap-3 items-center p-2" : "flex-col items-center gap-2 p-3"} transition-all duration-200 h-full`}
         style={{
-          borderColor: isHovered ? node.color : "#27272a",
-          boxShadow: isHovered ? `0 0 14px ${node.color}40` : "none",
+          borderColor: visible ? node.color : "#27272a",
+          boxShadow: visible ? `0 0 14px ${node.color}40` : "none",
         }}
       >
         {node.src ? (
@@ -112,7 +108,7 @@ export const NodeCard = ({
             height={compact ? 24 : 32}
             loading="lazy"
             decoding="async"
-            className={`object-contain transition-all duration-200 ${compact ? "w-6 h-6" : "w-8 h-8"} ${isHovered ? "" : "filter grayscale opacity-50"}`}
+            className={`object-contain transition-all duration-200 ${compact ? "w-6 h-6" : "w-8 h-8"} ${visible ? "" : "filter grayscale opacity-50"}`}
           />
         ) : (
           <div className={`${compact ? "w-6 h-6" : "w-8 h-8"} flex items-center justify-center font-bold text-[10px] border`} style={{ color: node.color, borderColor: node.color + "55" }} aria-hidden="true">
@@ -126,7 +122,7 @@ export const NodeCard = ({
       </div>
 
       <AnimatePresence>
-        {isHovered && (
+        {visible && (
           <motion.div
             id={tooltipId}
             role="tooltip"
@@ -180,7 +176,6 @@ const DownArrow = ({ label, color = "#3f3f46", delay = 0 }: { label?: string; co
 
 function MachineAuthDiagram() {
   const { ref, isInView } = useScrollReveal({ margin: "-50px" });
-  const [hovered, setHovered] = useState<string | null>(null);
 
   const cost   = useCountUp(1200, isInView, 2500, "$", "/mo");
   const yaml   = useCountUp(8200, isInView, 3000, "", " lines of YAML");
@@ -223,13 +218,7 @@ function MachineAuthDiagram() {
           </div>
           <div className="flex gap-3">
             {layer1.map(n => (
-              <NodeCard
-                key={n.id}
-                node={n}
-                isHovered={hovered === n.id}
-                onEnter={() => setHovered(n.id)}
-                onLeave={() => setHovered(null)}
-              />
+              <NodeCard key={n.id} node={n} />
             ))}
           </div>
           <div className="mt-3 text-[9px] text-zinc-600 border-t border-zinc-800 pt-2">
@@ -252,13 +241,7 @@ function MachineAuthDiagram() {
           </div>
           <div className="flex gap-3">
             {layer2.map(n => (
-              <NodeCard
-                key={n.id}
-                node={n}
-                isHovered={hovered === n.id}
-                onEnter={() => setHovered(n.id)}
-                onLeave={() => setHovered(null)}
-              />
+              <NodeCard key={n.id} node={n} />
             ))}
           </div>
           <div className="mt-3 text-[9px] text-zinc-600 border-t border-zinc-800 pt-2">
