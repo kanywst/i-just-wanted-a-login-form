@@ -8,7 +8,7 @@ export function useCountUp(
   suffix: string = ""
 ) {
   const [display, setDisplay] = useState(`${prefix}0${suffix}`);
-  const frameRef = useRef<number>(undefined);
+  const frameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (!shouldStart) return;
