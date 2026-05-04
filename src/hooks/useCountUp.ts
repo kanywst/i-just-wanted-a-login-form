@@ -13,11 +13,16 @@ export function useCountUp(
   useEffect(() => {
     if (!shouldStart) return;
 
-    const startTime = performance.now();
+    let startTime: number | null = null;
 
     function animate(currentTime: number) {
+      // Anchor startTime to the first rAF tick so it shares a clock with
+      // currentTime. performance.now() is a different reference in some
+      // environments (jsdom, certain mobile browsers under throttling) and
+      // would yield negative elapsed and a wildly wrong eased value.
+      if (startTime === null) startTime = currentTime;
       const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+      const progress = Math.min(Math.max(elapsed / duration, 0), 1);
 
       // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
