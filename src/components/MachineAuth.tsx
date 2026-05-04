@@ -66,7 +66,7 @@ const layer2: Node[] = [
   },
 ];
 
-const NodeCard = ({
+export const NodeCard = ({
   node,
   isHovered,
   onEnter,
