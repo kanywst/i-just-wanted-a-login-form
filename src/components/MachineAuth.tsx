@@ -78,56 +78,72 @@ const NodeCard = ({
   onEnter: () => void;
   onLeave: () => void;
   compact?: boolean;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.35 }}
-    onMouseEnter={onEnter}
-    onMouseLeave={onLeave}
-    className="relative cursor-help flex-1"
-  >
-    <div
-      className={`border bg-black flex ${compact ? "flex-row gap-3 items-center p-2" : "flex-col items-center gap-2 p-3"} transition-all duration-200 h-full`}
-      style={{
-        borderColor: isHovered ? node.color : "#27272a",
-        boxShadow: isHovered ? `0 0 14px ${node.color}40` : "none",
-      }}
+}) => {
+  const tooltipId = `node-tooltip-${node.id}`;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.35 }}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      onFocus={onEnter}
+      onBlur={onLeave}
+      tabIndex={0}
+      role="button"
+      aria-describedby={isHovered ? tooltipId : undefined}
+      aria-label={`${node.name} — ${node.sub}`}
+      className="relative cursor-help flex-1 outline-none focus-visible:ring-2 focus-visible:ring-white/60"
     >
-      {node.src ? (
-        <img
-          src={node.src}
-          alt={node.name}
-          className={`object-contain transition-all duration-200 ${compact ? "w-6 h-6" : "w-8 h-8"} ${isHovered ? "" : "filter grayscale opacity-50"}`}
-        />
-      ) : (
-        <div className={`${compact ? "w-6 h-6" : "w-8 h-8"} flex items-center justify-center font-bold text-[10px] border`} style={{ color: node.color, borderColor: node.color + "55" }}>
-          —
+      <div
+        className={`border bg-black flex ${compact ? "flex-row gap-3 items-center p-2" : "flex-col items-center gap-2 p-3"} transition-all duration-200 h-full`}
+        style={{
+          borderColor: isHovered ? node.color : "#27272a",
+          boxShadow: isHovered ? `0 0 14px ${node.color}40` : "none",
+        }}
+      >
+        {node.src ? (
+          <img
+            src={node.src}
+            alt=""
+            aria-hidden="true"
+            width={compact ? 24 : 32}
+            height={compact ? 24 : 32}
+            loading="lazy"
+            decoding="async"
+            className={`object-contain transition-all duration-200 ${compact ? "w-6 h-6" : "w-8 h-8"} ${isHovered ? "" : "filter grayscale opacity-50"}`}
+          />
+        ) : (
+          <div className={`${compact ? "w-6 h-6" : "w-8 h-8"} flex items-center justify-center font-bold text-[10px] border`} style={{ color: node.color, borderColor: node.color + "55" }} aria-hidden="true">
+            —
+          </div>
+        )}
+        <div className={compact ? "" : "text-center"}>
+          <div className={`font-bold text-white leading-tight ${compact ? "text-xs" : "text-xs"}`}>{node.name}</div>
+          <div className="text-[10px] text-zinc-500 mt-0.5 leading-tight">{node.sub}</div>
         </div>
-      )}
-      <div className={compact ? "" : "text-center"}>
-        <div className={`font-bold text-white leading-tight ${compact ? "text-xs" : "text-xs"}`}>{node.name}</div>
-        <div className="text-[10px] text-zinc-500 mt-0.5 leading-tight">{node.sub}</div>
       </div>
-    </div>
 
-    <AnimatePresence>
-      {isHovered && (
-        <motion.div
-          initial={{ opacity: 0, y: 6, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 4, scale: 0.95 }}
-          transition={{ duration: 0.15 }}
-          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-zinc-900 border border-zinc-700 p-3 text-xs text-zinc-300 rounded shadow-2xl z-50 text-center"
-          style={{ borderTopColor: node.color, borderTopWidth: 2 }}
-        >
-          <em>"{node.snark}"</em>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </motion.div>
-);
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            id={tooltipId}
+            role="tooltip"
+            initial={{ opacity: 0, y: 6, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.95 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-zinc-900 border border-zinc-700 p-3 text-xs text-zinc-300 rounded shadow-2xl z-50 text-center"
+            style={{ borderTopColor: node.color, borderTopWidth: 2 }}
+          >
+            <em>"{node.snark}"</em>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
 
 // Animated dashed vertical arrow
 const DownArrow = ({ label, color = "#3f3f46", delay = 0 }: { label?: string; color?: string; delay?: number }) => (
