@@ -14,7 +14,7 @@
   "dependencies": {
     "@fontsource/bebas-neue": "^5.2.7",
     "@fontsource/space-mono": "^5.2.9",
-    "framer-motion": "^12.38.0",
+    "framer-motion": "^12.40.0",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
