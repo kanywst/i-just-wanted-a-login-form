@@ -123,10 +123,10 @@ function App() {
             <table className="w-full max-w-2xl mx-auto font-mono text-left border border-zinc-800 text-sm md:text-base">
               <thead>
                 <tr className="border-b border-zinc-800 text-zinc-500 uppercase text-xs tracking-widest">
-                  <th className="p-3">Vendor</th>
-                  <th className="p-3">Without SSO</th>
-                  <th className="p-3 text-[var(--color-error)]">With SSO</th>
-                  <th className="p-3 text-right">Markup</th>
+                  <th scope="col" className="p-3">Vendor</th>
+                  <th scope="col" className="p-3">Without SSO</th>
+                  <th scope="col" className="p-3 text-[var(--color-error)]">With SSO</th>
+                  <th scope="col" className="p-3 text-right">Markup</th>
                 </tr>
               </thead>
               <tbody className="text-gray-300">
@@ -136,7 +136,7 @@ function App() {
                   { v: 'Mixpanel', a: '$20', b: '$833', up: '4,065%' },
                 ].map((r) => (
                   <tr key={r.v} className="border-b border-zinc-900 last:border-0">
-                    <td className="p-3 text-white font-bold">{r.v}</td>
+                    <th scope="row" className="p-3 text-white font-bold text-left">{r.v}</th>
                     <td className="p-3">{r.a}/mo</td>
                     <td className="p-3 text-[var(--color-error)] font-bold">{r.b}/mo</td>
                     <td className="p-3 text-right text-[var(--color-warning)] font-bold">+{r.up}</td>
@@ -160,12 +160,14 @@ function App() {
             You issue <span className="text-white font-bold">JWTs</span>. Signed. Verified. Airtight.
             <br />Then you read the spec.
           </p>
-          <div className="max-w-md mx-auto bg-zinc-900 border border-[var(--color-error)] font-mono text-left text-sm md:text-base p-5 rounded-sm shadow-[0_0_24px_rgba(255,0,0,0.25)]">
-            <div className="text-zinc-500">{'{'}</div>
-            <div className="pl-4"><span className="text-[var(--color-warning)]">"alg"</span>: <span className="text-[var(--color-error)] font-bold">"none"</span>,</div>
-            <div className="pl-4"><span className="text-[var(--color-warning)]">"admin"</span>: <span className="text-[var(--color-terminal)]">true</span></div>
-            <div className="text-zinc-500">{'}'}</div>
-          </div>
+          <pre className="max-w-md mx-auto bg-zinc-900 border border-[var(--color-error)] font-mono text-left text-sm md:text-base p-5 rounded-sm shadow-[0_0_24px_rgba(255,0,0,0.25)] overflow-x-auto"><code className="language-json">
+            <span className="text-zinc-500">{'{'}</span>{'\n  '}
+            <span className="text-[var(--color-warning)]">"alg"</span>{': '}
+            <span className="text-[var(--color-error)] font-bold">"none"</span>{',\n  '}
+            <span className="text-[var(--color-warning)]">"admin"</span>{': '}
+            <span className="text-[var(--color-terminal)]">true</span>{'\n'}
+            <span className="text-zinc-500">{'}'}</span>
+          </code></pre>
           <p className="text-lg md:text-xl text-gray-400">
             JWT has a mode where the signature is <span className="text-white font-bold">optional</span>.
             Vulnerable libraries accepted an unsigned token as valid.
