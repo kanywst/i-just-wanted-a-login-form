@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { m, useScroll, useSpring } from 'framer-motion';
 import type { ReactNode } from 'react';
 
 const defaultContainer = {
@@ -16,7 +16,7 @@ interface SectionProps {
 
 export function Section({ children, className = '' }: SectionProps) {
   return (
-    <motion.section 
+    <m.section 
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px 0px" }}
@@ -24,7 +24,7 @@ export function Section({ children, className = '' }: SectionProps) {
       className={`min-h-screen flex flex-col justify-center items-center py-32 px-4 ${className}`}
     >
       {children}
-    </motion.section>
+    </m.section>
   );
 }
 
@@ -38,7 +38,7 @@ export function ProgressBar() {
   });
 
   return (
-    <motion.div
+    <m.div
       style={{ scaleX }}
       className="fixed top-0 left-0 right-0 h-1 bg-(--color-terminal) origin-left z-50 mix-blend-difference"
     />

@@ -1,6 +1,6 @@
 
 import { Highlight, themes } from 'prism-react-renderer';
-import { motion as fMotion, useReducedMotion } from 'framer-motion';
+import { m as fMotion, useReducedMotion } from 'framer-motion';
 
 const codeString = `// TODO: Implement proper ReBAC with SpiceDB.
 // We also need to validate the JWT against the ABAC policies in Cedar.
