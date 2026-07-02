@@ -24,7 +24,7 @@ export function StatCounter({
 }: StatCounterProps) {
   const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' as `${number}px` });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
   const { display } = useCountUp(target, isInView, duration, prefix, suffix);
 
   return (
