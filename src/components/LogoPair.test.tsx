@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { LogoPair } from './LogoPair'
 
 describe('LogoPair', () => {
@@ -21,11 +21,21 @@ describe('LogoPair', () => {
     expect(img).toHaveAttribute('height', '64')
   })
 
-  it('does not register an onError handler that could create a fallback loop', () => {
+  it('falls back to an inline placeholder on error, exactly once', () => {
     const { container } = render(
       <LogoPair src="logos/missing.png" alt="Missing" text="Missing" />,
     )
-    const img = container.querySelector('img')
-    expect(img?.getAttribute('onerror')).toBeNull()
+    const img = container.querySelector('img')!
+
+    // First failure swaps in the inline SVG placeholder.
+    fireEvent.error(img)
+    expect(img.getAttribute('src')).toMatch(/^data:image\/svg\+xml/)
+    expect(img.dataset.fallback).toBe('true')
+
+    // A second error (e.g. the placeholder itself) must not re-trigger the
+    // swap — the guard prevents an infinite onError loop.
+    const swapped = img.getAttribute('src')
+    fireEvent.error(img)
+    expect(img.getAttribute('src')).toBe(swapped)
   })
 })
