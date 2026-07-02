@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useCountUp } from "../hooks/useCountUp";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { Section } from "./Section";
@@ -79,7 +79,7 @@ export const NodeCard = ({
   const visible = isHovered || isFocused;
   const tooltipId = `node-tooltip-${node.id}`;
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -125,7 +125,7 @@ export const NodeCard = ({
 
       <AnimatePresence>
         {visible && (
-          <motion.div
+          <m.div
             id={tooltipId}
             role="tooltip"
             initial={{ opacity: 0, y: 6, scale: 0.95 }}
@@ -136,10 +136,10 @@ export const NodeCard = ({
             style={{ borderTopColor: node.color, borderTopWidth: 2 }}
           >
             <em>"{node.snark}"</em>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -147,7 +147,7 @@ export const NodeCard = ({
 const DownArrow = ({ label, color = "#3f3f46", delay = 0 }: { label?: string; color?: string; delay?: number }) => (
   <div className="flex flex-col items-center py-1 gap-0.5">
     <svg width="2" height="28" className="overflow-visible">
-      <motion.line
+      <m.line
         x1="1" y1="0" x2="1" y2="28"
         stroke={color}
         strokeWidth="1.5"
@@ -163,7 +163,7 @@ const DownArrow = ({ label, color = "#3f3f46", delay = 0 }: { label?: string; co
         {label}
       </div>
     )}
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -172,7 +172,7 @@ const DownArrow = ({ label, color = "#3f3f46", delay = 0 }: { label?: string; co
       className="text-sm leading-none"
     >
       ▼
-    </motion.div>
+    </m.div>
   </div>
 );
 
@@ -188,7 +188,7 @@ function MachineAuthDiagram() {
     <div ref={ref} className="w-full mt-10 font-mono">
 
       {/* Metrics row */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -204,13 +204,13 @@ function MachineAuthDiagram() {
             <div className="text-xl sm:text-2xl font-bold" style={{ color: m.color }}>{m.value}</div>
           </div>
         ))}
-      </motion.div>
+      </m.div>
 
       {/* Diagram */}
       <div className="w-full max-w-3xl mx-auto">
 
         {/* Layer 1: Control Plane */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -16 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -227,12 +227,12 @@ function MachineAuthDiagram() {
           <div className="mt-3 text-[9px] text-zinc-600 border-t border-zinc-800 pt-2">
             Istiod pushes xDS config to every Envoy · SPIRE issues SVID to each workload · Gatekeeper blocks bad manifests on admission
           </div>
-        </motion.div>
+        </m.div>
 
         <DownArrow label="xDS config + SVID certs" color="#3f3f46" delay={0.2} />
 
         {/* Layer 2: Node / Network */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 16 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -250,12 +250,12 @@ function MachineAuthDiagram() {
           <div className="mt-3 text-[9px] text-zinc-600 border-t border-zinc-800 pt-2">
             SPIRE Agent runs as DaemonSet on every node · Cilium enforces L3/L4 NetworkPolicy via eBPF
           </div>
-        </motion.div>
+        </m.div>
 
         <DownArrow label="eBPF identity + L4 policy" color="#3f3f46" delay={0.4} />
 
         {/* Layer 3: Data plane — the actual apps */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -288,7 +288,7 @@ function MachineAuthDiagram() {
             {/* Arrow */}
             <div className="flex flex-col items-center justify-center px-1 gap-0.5">
               <svg width="40" height="16">
-                <motion.line
+                <m.line
                   x1="0" y1="8" x2="40" y2="8"
                   stroke="var(--color-terminal)"
                   strokeWidth="1.5"
@@ -328,7 +328,7 @@ function MachineAuthDiagram() {
           <div className="mt-3 text-[9px] text-zinc-600 border-t border-[var(--color-terminal)]/10 pt-2">
             Envoy intercepts all traffic · mTLS mutual auth via SPIFFE X.509 SVIDs · Istio AuthorizationPolicy enforced at L7
           </div>
-        </motion.div>
+        </m.div>
 
         <div className="text-center mt-3 text-[10px] text-zinc-600 italic">
           hover each component to learn why it's there
@@ -342,7 +342,7 @@ export function MachineAuthSection() {
   return (
     <Section className="border-t border-neutral-900 bg-neutral-950">
       <div className="max-w-4xl mx-auto w-full space-y-8">
-        <motion.div
+        <m.div
           initial={{ scale: 0.92, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
@@ -361,9 +361,9 @@ export function MachineAuthSection() {
           <div className="bg-[var(--color-error)] text-white font-bold p-4 text-xl uppercase animate-pulse">
             The two containers just wanted to talk to each other.
           </div>
-        </motion.div>
+        </m.div>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -372,7 +372,7 @@ export function MachineAuthSection() {
         >
           You chose <strong className="text-white">Istio</strong>. Just one service mesh. That's it. <br />
           Here's everything that comes with "just one service mesh" in production:
-        </motion.p>
+        </m.p>
 
         <MachineAuthDiagram />
       </div>

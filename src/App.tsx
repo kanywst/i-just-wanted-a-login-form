@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { Section, ProgressBar } from './components/Section';
 import { CodeBlock } from './components/CodeBlock';
 import { LogoPair } from './components/LogoPair';
@@ -17,7 +17,7 @@ function App() {
       {/* Section 1: Hero */}
       <section className="min-h-screen flex flex-col items-center justify-center p-6 relative">
         <div className="max-w-5xl mx-auto text-center w-full">
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -26,23 +26,23 @@ function App() {
           >
             I just wanted a login form.
             <span className="cursor-blink" aria-hidden="true">▊</span>
-          </motion.h1>
-          <motion.p
+          </m.h1>
+          <m.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
             className="text-xl md:text-2xl text-gray-500 mt-12 max-w-2xl mx-auto leading-relaxed"
           >
             A short story about modern authentication and authorization.
-          </motion.p>
+          </m.p>
         </div>
-        <motion.div
+        <m.div
           animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
           className="absolute bottom-10 text-gray-600 text-4xl"
         >
           ↓
-        </motion.div>
+        </m.div>
       </section>
 
       {/* Section 2: Simple Auth */}
@@ -245,7 +245,7 @@ function App() {
 
       {/* Section 9: The Count */}
       <section className="min-h-[50vh] flex flex-col items-center justify-center p-8 border-t border-zinc-900 bg-black text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -259,7 +259,7 @@ function App() {
             className="block text-[clamp(4rem,15vw,9rem)] font-black text-[var(--color-error)] leading-none mb-8"
           />
           <p className="text-2xl md:text-4xl text-white font-bold uppercase tracking-widest">identity providers.</p>
-        </motion.div>
+        </m.div>
       </section>
 
       {/* Section 9.5: Okta — you outsourced to the experts */}

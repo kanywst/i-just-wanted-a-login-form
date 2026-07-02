@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Section } from './Section';
 
 interface Milestone {
@@ -70,9 +70,9 @@ export function Timeline() {
         </p>
 
         <ol className="relative border-l border-zinc-800 ml-3 space-y-10">
-          {milestones.map((m, i) => (
-            <motion.li
-              key={m.year + m.title}
+          {milestones.map((ms, i) => (
+            <m.li
+              key={ms.year + ms.title}
               initial={{ opacity: 0, x: -12 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-60px' }}
@@ -81,20 +81,20 @@ export function Timeline() {
             >
               <span
                 className="absolute -left-[41px] top-1.5 w-3.5 h-3.5 rounded-full border-2 bg-black"
-                style={{ borderColor: m.color }}
+                style={{ borderColor: ms.color }}
                 aria-hidden="true"
               />
               <div className="flex items-baseline gap-3 flex-wrap">
                 <span
                   className="font-mono text-sm font-bold tracking-widest uppercase"
-                  style={{ color: m.color }}
+                  style={{ color: ms.color }}
                 >
-                  {m.year}
+                  {ms.year}
                 </span>
-                <span className="text-white font-bold text-lg">{m.title}</span>
+                <span className="text-white font-bold text-lg">{ms.title}</span>
               </div>
-              <p className="text-gray-400 text-sm md:text-base mt-1 leading-relaxed">{m.note}</p>
-            </motion.li>
+              <p className="text-gray-400 text-sm md:text-base mt-1 leading-relaxed">{ms.note}</p>
+            </m.li>
           ))}
         </ol>
       </div>
