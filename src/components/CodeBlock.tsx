@@ -1,6 +1,6 @@
 
 import { Highlight, themes } from 'prism-react-renderer';
-import { motion as fMotion } from 'framer-motion';
+import { motion as fMotion, useReducedMotion } from 'framer-motion';
 
 const codeString = `// TODO: Implement proper ReBAC with SpiceDB.
 // We also need to validate the JWT against the ABAC policies in Cedar.
@@ -15,6 +15,7 @@ func IsAuthorized(user User, resource Resource) bool {
 }`;
 
 export function CodeBlock() {
+  const reduceMotion = useReducedMotion();
   return (
     <fMotion.div 
       variants={{
@@ -50,7 +51,11 @@ export function CodeBlock() {
       <fMotion.p 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1, repeat: Infinity, repeatType: "reverse" }}
+        transition={
+          reduceMotion
+            ? { delay: 0.3, duration: 0.6 }
+            : { delay: 1, duration: 1, repeat: Infinity, repeatType: "reverse" }
+        }
         className="text-center mt-12 text-5xl md:text-7xl font-black tracking-widest text-[var(--color-terminal)]"
         style={{ fontFamily: 'var(--font-headings)' }}
       >
