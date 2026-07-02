@@ -17,7 +17,10 @@ const FALLBACK_SRC =
  */
 export function handleLogoError(e: SyntheticEvent<HTMLImageElement>) {
   const img = e.currentTarget;
-  if (img.dataset.fallback) return;
+  // Guard on the src itself rather than a one-shot flag: if React re-asserts
+  // the original (failing) src on a later render we re-apply the placeholder,
+  // and if the placeholder itself ever fails we stop here (no loop).
+  if (img.src.startsWith('data:')) return;
   img.dataset.fallback = 'true';
   img.src = FALLBACK_SRC;
 }
