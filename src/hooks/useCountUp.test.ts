@@ -18,7 +18,11 @@ describe('useCountUp', () => {
     const { result } = renderHook(() => useCountUp(1000, true, 50, '', ' lines'))
     await waitFor(
       () => expect(result.current.display).toBe('1,000 lines'),
-      { timeout: 500 },
+      // Generous ceiling: rAF ticks can be starved on a loaded CI runner,
+      // so the count-up may take far longer than its 50ms nominal duration.
+      // waitFor resolves as soon as the value lands, so this doesn't slow
+      // down healthy runs — it only prevents a timing flake.
+      { timeout: 3000 },
     )
   })
 
@@ -26,7 +30,11 @@ describe('useCountUp', () => {
     const { result } = renderHook(() => useCountUp(8200, true, 50))
     await waitFor(
       () => expect(result.current.display).toBe('8,200'),
-      { timeout: 500 },
+      // Generous ceiling: rAF ticks can be starved on a loaded CI runner,
+      // so the count-up may take far longer than its 50ms nominal duration.
+      // waitFor resolves as soon as the value lands, so this doesn't slow
+      // down healthy runs — it only prevents a timing flake.
+      { timeout: 3000 },
     )
   })
 })
