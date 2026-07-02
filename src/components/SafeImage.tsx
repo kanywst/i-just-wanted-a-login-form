@@ -22,6 +22,16 @@ type SafeImageProps = ImgHTMLAttributes<HTMLImageElement> & { src: string };
  */
 export function SafeImage({ src, ...rest }: SafeImageProps) {
   const [failed, setFailed] = useState(false);
+  const [prevSrc, setPrevSrc] = useState(src);
+
+  // Reset the fallback when the src prop changes, so a new source gets a
+  // fresh load attempt instead of being stuck on the placeholder. This is
+  // React's "adjust state during render" pattern (no effect, no flash).
+  if (src !== prevSrc) {
+    setPrevSrc(src);
+    setFailed(false);
+  }
+
   return (
     <img
       {...rest}
