@@ -25,7 +25,9 @@ export function StatCounter({
   const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const { display } = useCountUp(target, isInView, duration, prefix, suffix);
+  // Skip the rAF loop entirely under reduced motion — we render the static
+  // value below, so there's no reason to spin the animation in the background.
+  const { display } = useCountUp(target, reduceMotion ? false : isInView, duration, prefix, suffix);
 
   return (
     <span ref={ref} className={className}>
