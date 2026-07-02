@@ -21,19 +21,18 @@ describe('LogoPair', () => {
     expect(img).toHaveAttribute('height', '64')
   })
 
-  it('falls back to an inline placeholder on error, exactly once', () => {
+  it('falls back to an inline placeholder on error, without looping', () => {
     const { container } = render(
       <LogoPair src="logos/missing.png" alt="Missing" text="Missing" />,
     )
     const img = container.querySelector('img')!
 
-    // First failure swaps in the inline SVG placeholder.
+    // First failure swaps in the inline SVG placeholder (via state).
     fireEvent.error(img)
     expect(img.getAttribute('src')).toMatch(/^data:image\/svg\+xml/)
-    expect(img.dataset.fallback).toBe('true')
 
-    // A second error (e.g. the placeholder itself) must not re-trigger the
-    // swap — the guard prevents an infinite onError loop.
+    // A second error (e.g. the placeholder itself failing) re-sets the same
+    // state — a no-op — so the src stays on the placeholder, no loop.
     const swapped = img.getAttribute('src')
     fireEvent.error(img)
     expect(img.getAttribute('src')).toBe(swapped)

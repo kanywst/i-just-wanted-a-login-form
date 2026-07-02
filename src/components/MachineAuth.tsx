@@ -3,7 +3,7 @@ import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useCountUp } from "../hooks/useCountUp";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { Section } from "./Section";
-import { handleLogoError } from "./imageFallback";
+import { SafeImage } from "./SafeImage";
 
 // ---- A realistic Istio-based production stack ----
 // You picked ONE service mesh. Here's what comes with it.
@@ -101,7 +101,7 @@ export const NodeCard = ({
         }}
       >
         {node.src ? (
-          <img
+          <SafeImage
             src={node.src}
             alt=""
             aria-hidden="true"
@@ -109,7 +109,6 @@ export const NodeCard = ({
             height={compact ? 24 : 32}
             loading="lazy"
             decoding="async"
-            onError={handleLogoError}
             className={`object-contain transition-all duration-200 ${compact ? "w-6 h-6" : "w-8 h-8"} ${visible ? "" : "filter grayscale opacity-50"}`}
           />
         ) : (
