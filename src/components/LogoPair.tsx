@@ -1,3 +1,5 @@
+import { handleLogoError } from './imageFallback';
+
 interface LogoPairProps {
   src: string;
   alt: string;
@@ -15,6 +17,7 @@ export function LogoPair({ src, alt, text }: LogoPairProps) {
         height={64}
         loading="lazy"
         decoding="async"
+        onError={handleLogoError}
         className="w-16 h-16 object-contain filter grayscale contrast-125 transition-all duration-300 group-hover:grayscale-0 group-hover:contrast-100 relative z-10"
       />
       <span className="text-sm mt-4 text-zinc-400 font-mono relative z-10 group-hover:text-white">{text}</span>

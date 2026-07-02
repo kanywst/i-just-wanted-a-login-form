@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useCountUp } from "../hooks/useCountUp";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { Section } from "./Section";
+import { handleLogoError } from "./imageFallback";
 
 // ---- A realistic Istio-based production stack ----
 // You picked ONE service mesh. Here's what comes with it.
@@ -108,6 +109,7 @@ export const NodeCard = ({
             height={compact ? 24 : 32}
             loading="lazy"
             decoding="async"
+            onError={handleLogoError}
             className={`object-contain transition-all duration-200 ${compact ? "w-6 h-6" : "w-8 h-8"} ${visible ? "" : "filter grayscale opacity-50"}`}
           />
         ) : (
@@ -130,7 +132,7 @@ export const NodeCard = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-zinc-900 border border-zinc-700 p-3 text-xs text-zinc-300 rounded shadow-2xl z-50 text-center"
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 max-w-[80vw] bg-zinc-900 border border-zinc-700 p-3 text-xs text-zinc-300 rounded shadow-2xl z-50 text-center"
             style={{ borderTopColor: node.color, borderTopWidth: 2 }}
           >
             <em>"{node.snark}"</em>
@@ -176,6 +178,7 @@ const DownArrow = ({ label, color = "#3f3f46", delay = 0 }: { label?: string; co
 
 function MachineAuthDiagram() {
   const { ref, isInView } = useScrollReveal({ margin: "-50px" });
+  const reduceMotion = useReducedMotion();
 
   const cost   = useCountUp(1200, isInView, 2500, "$", "/mo");
   const yaml   = useCountUp(8200, isInView, 3000, "", " lines of YAML");
@@ -293,7 +296,11 @@ function MachineAuthDiagram() {
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8, repeat: Infinity, repeatType: "loop", ease: "linear" }}
+                  transition={
+                    reduceMotion
+                      ? { duration: 0.4 }
+                      : { duration: 0.8, repeat: Infinity, repeatType: "loop", ease: "linear" }
+                  }
                 />
               </svg>
               <div className="text-[8px] text-[var(--color-terminal)] font-bold text-center leading-tight">mTLS</div>
