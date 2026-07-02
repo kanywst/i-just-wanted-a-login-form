@@ -1,4 +1,4 @@
-import { m } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { Section } from './Section';
 
 interface Milestone {
@@ -61,6 +61,7 @@ const milestones: Milestone[] = [
 ];
 
 export function Timeline() {
+  const reduceMotion = useReducedMotion();
   return (
     <Section className="border-t border-neutral-900 border-dashed">
       <div className="max-w-3xl mx-auto w-full">
@@ -73,10 +74,10 @@ export function Timeline() {
           {milestones.map((ms, i) => (
             <m.li
               key={ms.year + ms.title}
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -12 }}
+              whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}
+              transition={reduceMotion ? { duration: 0.25 } : { duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}
               className="ml-8 relative"
             >
               <span

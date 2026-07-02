@@ -211,8 +211,8 @@ function MachineAuthDiagram() {
 
         {/* Layer 1: Control Plane */}
         <m.div
-          initial={{ opacity: 0, x: -16 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -16 }}
+          whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
           viewport={{ once: true }}
           className="border border-zinc-700 bg-zinc-950 p-4"
         >
@@ -233,10 +233,10 @@ function MachineAuthDiagram() {
 
         {/* Layer 2: Node / Network */}
         <m.div
-          initial={{ opacity: 0, x: 16 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 16 }}
+          whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: reduceMotion ? 0 : 0.1 }}
           className="border border-zinc-700 bg-zinc-950 p-4"
         >
           <div className="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">
@@ -256,10 +256,10 @@ function MachineAuthDiagram() {
 
         {/* Layer 3: Data plane — the actual apps */}
         <m.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+          whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: reduceMotion ? 0 : 0.2 }}
           className="border border-[var(--color-terminal)]/30 bg-black p-4"
         >
           <div className="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">
