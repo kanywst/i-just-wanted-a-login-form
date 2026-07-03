@@ -36,7 +36,10 @@ export function SafeImage({ src, ...rest }: SafeImageProps) {
     <img
       {...rest}
       src={failed ? FALLBACK_SRC : src}
-      onError={() => setFailed(true)}
+      onError={(e) => {
+        setFailed(true);
+        rest.onError?.(e);
+      }}
     />
   );
 }
