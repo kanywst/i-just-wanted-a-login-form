@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useInView, useReducedMotion } from 'framer-motion';
-import { useCountUp } from '../hooks/useCountUp';
+import { useCountUp, formatTarget } from '../hooks/useCountUp';
 
 interface StatCounterProps {
   target: number;
@@ -31,7 +31,7 @@ export function StatCounter({
 
   return (
     <span ref={ref} className={className}>
-      {reduceMotion ? `${prefix}${target.toLocaleString()}${suffix}` : display}
+      {reduceMotion ? formatTarget(target, prefix, suffix) : display}
     </span>
   );
 }
