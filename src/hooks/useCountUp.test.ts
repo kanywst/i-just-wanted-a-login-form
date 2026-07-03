@@ -37,4 +37,13 @@ describe('useCountUp', () => {
       { timeout: 3000 },
     )
   })
+
+  it('keeps fractional targets instead of rounding them', async () => {
+    const { result } = renderHook(() => useCountUp(6.5, true, 50, ' $', 'B '))
+    expect(result.current.display).toBe(' $0.0B ')
+    await waitFor(
+      () => expect(result.current.display).toBe(' $6.5B '),
+      { timeout: 3000 },
+    )
+  })
 })
