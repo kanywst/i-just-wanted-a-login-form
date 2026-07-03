@@ -18,7 +18,7 @@ function App() {
       <section className="min-h-screen flex flex-col items-center justify-center p-6 relative">
         <div className="max-w-5xl mx-auto text-center w-full">
           <m.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             className="mb-8 text-[var(--color-terminal)]"
@@ -248,7 +248,7 @@ function App() {
       {/* Section 9: The Count */}
       <section className="min-h-[50vh] flex flex-col items-center justify-center p-8 border-t border-zinc-900 bg-black text-center">
         <m.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ type: "spring", damping: 16 }}

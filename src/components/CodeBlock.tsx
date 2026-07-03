@@ -17,11 +17,15 @@ func IsAuthorized(user User, resource Resource) bool {
 export function CodeBlock() {
   const reduceMotion = useReducedMotion();
   return (
-    <fMotion.div 
-      variants={{
-        hidden: { scale: 0.95, opacity: 0, y: 50 },
-        visible: { scale: 1, opacity: 1, y: 0, transition: { type: 'spring', damping: 20 } }
-      }}
+    <fMotion.div
+      variants={
+        reduceMotion
+          ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+          : {
+              hidden: { scale: 0.95, opacity: 0, y: 50 },
+              visible: { scale: 1, opacity: 1, y: 0, transition: { type: 'spring', damping: 20 } },
+            }
+      }
       className="w-full max-w-4xl mx-auto"
     >
       <div className="bg-zinc-900 border border-zinc-700 rounded-sm overflow-hidden shadow-2xl">
