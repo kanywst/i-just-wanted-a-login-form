@@ -76,11 +76,12 @@ export const NodeCard = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const reduceMotion = useReducedMotion();
   const visible = isHovered || isFocused;
   const tooltipId = `node-tooltip-${node.id}`;
   return (
     <m.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35 }}
@@ -338,11 +339,12 @@ function MachineAuthDiagram() {
 }
 
 export function MachineAuthSection() {
+  const reduceMotion = useReducedMotion();
   return (
     <Section className="border-t border-neutral-900 bg-neutral-950">
       <div className="max-w-4xl mx-auto w-full space-y-8">
         <m.div
-          initial={{ scale: 0.92, opacity: 0 }}
+          initial={reduceMotion ? { opacity: 0 } : { scale: 0.92, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ type: "spring", damping: 18 }}
