@@ -28,9 +28,7 @@ export function Quote({ children, tone = 'terminal', cite, className = '' }: Quo
     >
       {children}
       {cite && (
-        <footer className="mt-3 text-sm text-zinc-500 not-italic tracking-wide">
-          — <cite>{cite}</cite>
-        </footer>
+        <footer className="mt-3 text-sm text-zinc-500 not-italic tracking-wide">— {cite}</footer>
       )}
     </blockquote>
   );
