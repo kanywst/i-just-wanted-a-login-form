@@ -293,12 +293,12 @@ function MachineAuthDiagram() {
                   stroke="var(--color-terminal)"
                   strokeWidth="1.5"
                   strokeDasharray="5 3"
-                  initial={{ pathLength: 0 }}
+                  initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={{ once: true }}
                   transition={
                     reduceMotion
-                      ? { duration: 0.4 }
+                      ? { duration: 0 }
                       : { duration: 0.8, repeat: Infinity, repeatType: "loop", ease: "linear" }
                   }
                 />
