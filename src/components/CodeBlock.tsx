@@ -18,6 +18,9 @@ export function CodeBlock() {
   const reduceMotion = useReducedMotion();
   return (
     <fMotion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
       variants={
         reduceMotion
           ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
